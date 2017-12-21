@@ -1,0 +1,2 @@
+- codificare stringa input ricevuta
+- scrivere funzione cesare
