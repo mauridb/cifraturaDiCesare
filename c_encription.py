@@ -5,17 +5,22 @@ import sys
 # ex. python c_encription.py -k 5 -txt myfile.txt
 
 alphab = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+SPECIAL_CHAR = [' ']
 
 def caesar_encript(text, key):
     # encript
     new_text = []
+    str_cod = ""
     for index, item in enumerate(text):
-        found = alphab.index(item)
-        new_index = found + key
-        if new_index > 26:
-            new_index = new_index %26
-        print new_index
-        
+        if item in SPECIAL_CHAR:
+            str_cod += item
+        else:
+            found = alphab.index(item)
+            new_index = found + key
+            if new_index > 25: 
+                new_index = new_index %26
+            str_cod += alphab[new_index]
+    return str_cod
 
 ARGS = sys.argv
 try:
@@ -30,6 +35,10 @@ with open(ARGS[4], 'r') as f:
     text = []
     for index, line in enumerate(f.readlines()):
         for char in line:
-            if char.isalpha():
+            if char.isalpha() or char == " ":
                 text.append(char)
-    caesar_encript(text, int(ARGS[2]))
+    c_enc = caesar_encript(text, int(ARGS[2]))
+    print c_enc 
+
+with open('encriptedCF.txt', 'w') as ce_file:
+    ce_file.write(c_enc)
